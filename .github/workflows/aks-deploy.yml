@@ -33,13 +33,16 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
-    # Docker build and push to the Azure Container Registry
+    # Logs in to the Azure Container Registry
     - uses: Azure/docker-login@v1
       with:
         login-server: lmsjava.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}   
-    - run: |
+
+    # Build and push image to Azure Container Registry
+    - name: Build and push image to Azure Container Registry
+      run: |
         docker build . -t ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
         docker push ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
 
@@ -65,8 +68,8 @@ jobs:
       uses: Azure/k8s-deploy@v1
       with:
         manifests: |
-          manifests/deployment.yaml
-          manifests/service.yaml
+          manifests/deployment.yml
+          manifests/service.yml
         images: |
           ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
         imagepullsecrets: |

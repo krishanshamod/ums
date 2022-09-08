@@ -27,7 +27,7 @@ jobs:
 
     - uses: Azure/docker-login@v1
       with:
-        login-server: cloudlifeacr.azurecr.io
+        login-server: lmsjava.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
     

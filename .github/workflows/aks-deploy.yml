@@ -36,18 +36,10 @@ jobs:
         docker build . -t lmsjava.azurecr.io/ums:${{ github.sha }}
         docker push lmsjava.azurecr.io/ums:${{ github.sha }}
 
-    # Logs in using Azure credentials
-    - name: Logs in using Azure credentials
-      uses: Azure/aks-set-context@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: aksdemokasun
-        resource-group: AKS-Demo-Cluster-RG
-
-
     # Retrieves your Azure Kubernetes Service cluster's kubeconfig file
     - name: Get K8s context
-      uses: azure/aks-set-context@v2.0
+      uses: Azure/aks-set-context@v1
       with:
-        resource-group: ${{ secrets.RESOURCE_GROUP }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         cluster-name: ${{ secrets.CLUSTER_NAME }}
+        resource-group: ${{ secrets.RESOURCE_GROUP }}

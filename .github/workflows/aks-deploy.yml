@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 env:
-  AZURE_CONTAINER_REGISTRY: "lmsjava.azurecr.io"
+  AZURE_CONTAINER_REGISTRY: "scholarxlms.azurecr.io"
   CONTAINER_NAME: "ums"
   RESOURCE_GROUP: "aks-cluster-rg"
   CLUSTER_NAME: "aks-cluster"
@@ -36,7 +36,7 @@ jobs:
     # Logs in to the Azure Container Registry
     - uses: Azure/docker-login@v1
       with:
-        login-server: lmsjava.azurecr.io
+        login-server: ${{ env.AZURE_CONTAINER_REGISTRY }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}   
 
